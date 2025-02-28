@@ -51,6 +51,7 @@ def vici_to_ghl(request: Request):
             "zip": zip_code,
             "country": country,
             "address1": f"{city}, {state} {zip_code}",
+            "tags": ["New lead"],
         }
 
         contact = app_instance.contact_lookup(query)
@@ -60,7 +61,7 @@ def vici_to_ghl(request: Request):
             print(f"Contact created: {contact_id}")
             note_data = f"Disposition: {disposition}\nTalk Time: {talk_time}\nTerm Reason: {term_reason}\nCall Note: {call_note}"
             note_response = app_instance.create_note(contact_id, note_data)
-            print(f"Note created: {note_response["id"]}")
+            print(f"Note created: {note_response['id']}")
 
         else:
             contact_id = contact['id']
@@ -68,7 +69,7 @@ def vici_to_ghl(request: Request):
             print(f"Contact updated: {contact_id}")
             note_data = f"Disposition: {disposition}\nTalk Time: {talk_time}\nTerm Reason: {term_reason}\nCall Note: {call_note}"
             note_response = app_instance.create_note(contact_id, note_data)
-            print(f"Note created: {note_response["id"]}")
+            print(f"Note created: {note_response['id']}")
 
 
     except Exception as e:

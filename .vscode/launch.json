@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "name": "Run Cloud Function Locally",
+          "type": "debugpy",
+          "request": "launch",
+          "module": "functions_framework",
+          "args": [
+              "--target",
+              "vici_to_ghl",
+              "--debug"
+          ],
+          "console": "integratedTerminal",
+          "cwd": "${workspaceFolder}/code_dir",
+      }
+  ]
+}
