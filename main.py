@@ -71,7 +71,5 @@ def vici_to_ghl(request: functions_framework.Request):
     except Exception as e:
         return jsonify({"error": str(e)}), 400
     
-# Ensure the function starts if deployed in a local container (Cloud Run requirement)
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8080))  # Google Cloud Run requires 8080
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=8080)  # Always use port 8080 for Cloud Functions
