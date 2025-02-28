@@ -46,6 +46,3 @@ jobs:
             --region=${{ secrets.GCP_REGION }} \
             --memory=256MB \
             --timeout=300s
-
-      - name: Cleanup
-        run: deactivate
