@@ -1,14 +1,10 @@
 import functions_framework
 from google.cloud import firestore
-from flask import Flask, request, jsonify
+from flask import jsonify, Request
 from .apps import *
-import os
-import requests
-
-app = Flask(__name__)
 
 @functions_framework.http
-def vici_to_ghl(request: functions_framework.Request):
+def vici_to_ghl(request: Request):
     try:
         # Extract query parameters from the request
         params = request.args
@@ -70,6 +66,3 @@ def vici_to_ghl(request: functions_framework.Request):
 
     except Exception as e:
         return jsonify({"error": str(e)}), 400
-    
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080)  # Always use port 8080 for Cloud Functions
