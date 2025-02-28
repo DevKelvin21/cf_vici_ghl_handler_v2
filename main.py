@@ -56,12 +56,19 @@ def vici_to_ghl(request: Request):
         contact = app_instance.contact_lookup(query)
         if not contact:
             contact_response = app_instance.create_contact(data)
-            print(f"Contact created: {contact_response["id"]}")
+            contact_id = contact_response["id"]
+            print(f"Contact created: {contact_id}")
+            note_data = f"Disposition: {disposition}\nTalk Time: {talk_time}\nTerm Reason: {term_reason}\nCall Note: {call_note}"
+            note_response = app_instance.create_note(contact_id, note_data)
+            print(f"Note created: {note_response["id"]}")
 
         else:
             contact_id = contact['id']
             contact_response = app_instance.update_contact(contact_id, data)
-            print(f"Contact updated: {contact_response["id"]}")
+            print(f"Contact updated: {contact_id}")
+            note_data = f"Disposition: {disposition}\nTalk Time: {talk_time}\nTerm Reason: {term_reason}\nCall Note: {call_note}"
+            note_response = app_instance.create_note(contact_id, note_data)
+            print(f"Note created: {note_response["id"]}")
 
 
     except Exception as e:
