@@ -45,7 +45,6 @@ jobs:
             --entry-point vici_to_ghl \
             --region=${{ secrets.GCP_REGION }} \
             --memory=256MB \
-            --timeout=180s
 
       - name: Cleanup
         run: deactivate
