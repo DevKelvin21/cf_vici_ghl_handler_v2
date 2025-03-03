@@ -11,8 +11,10 @@
               "vici_to_ghl",
               "--debug"
           ],
+          "env": {
+              "GOOGLE_APPLICATION_CREDENTIALS": "/Users/kelvin/keys/dev-at-cf-dataflow-9a096deafc6b.json"
+          },
           "console": "integratedTerminal",
-          "cwd": "${workspaceFolder}/code_dir",
       }
   ]
 }

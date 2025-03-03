@@ -8,7 +8,7 @@ class GHL:
     def __init__(self, agency_api_key, location_id) -> None:
         self.agency_api_key = agency_api_key
         self.location_id = location_id
-        self.location_api_key = None
+        self.location_api_key = agency_api_key
         self.get_location_ep = f'https://rest.gohighlevel.com/v1/locations/{self.location_id}'
         self.contact_ep = 'https://rest.gohighlevel.com/v1/contacts/{}'
         self.contact_lookup_ep = 'https://rest.gohighlevel.com/v1/contacts/lookup?'
