@@ -112,6 +112,27 @@ def vici_to_ghl(request: Request):
             note_response = app_instance.add_notes(contact_id, note_data, user_id)
             if note_response:
                 logging.info(f"Note created: {note_response.get('id')}")
+
+            pipelines=app_instance.get_pipelines()
+            my_pipeline = None
+            for pipeline in pipelines:
+                if pipeline['name'] == config.get('pipelineName', 'Expireds and FSBO'):
+                    my_pipeline = pipeline
+            if my_pipeline != None:
+                my_stage = None
+                for stage in my_pipeline['stages']:
+                    if stage['name'] == config.get('firstStageName','New'):
+                        my_stage = stage
+                if my_stage != None:
+                    opportunity_data = {
+                        "status": "open",
+                        "title": f"{first_name} {last_name}",
+                        "stageId": my_stage['id'],
+                        "contactId": contact_id
+                    }
+                    my_opportunity_response = app_instance.create_opportunity(my_pipeline['id'], opportunity_data)
+                    if my_opportunity_response:
+                        logging.info(f"Opportunity Created: {my_opportunity_response['id']} {my_opportunity_response['name']}")
             return jsonify({"contact_id": contact_id}), 200
         else:
             # Update existing contact and add a note.
