@@ -269,6 +269,7 @@ def set_tags(disposition, dispositions_mapping):
     """
     Sets tags for the contact based on provided data.
     This helper function maps provided data to the expected tag format.
+    If no tags are added, it defaults to "New Lead".
     """
     result = []
     
@@ -277,5 +278,9 @@ def set_tags(disposition, dispositions_mapping):
             if disposition in values:
                 result.append(tag)
                 break
+
+    # Add "New Lead" as a default tag if no tags were added
+    if not result:
+        result.append("New Lead")
 
     return result
