@@ -177,7 +177,7 @@ def vici_to_ghl(request: Request):
             "postalCode": zip_code,
             "address1": f"{city}, {state} {zip_code}, {country}",
             "customField": set_custom_fields(custom_fields_values, custom_fields),
-            "tags": set_tags(disposition, config.get('dispositionsMapping', {})),
+            "tags": set_tags(disposition, config.get('dispositionTagMapping', {})),
         }
 
         # Look up existing contact via external API.
