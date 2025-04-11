@@ -116,12 +116,12 @@ def vici_to_ghl(request: Request):
             pipelines=app_instance.get_pipelines()
             my_pipeline = None
             for pipeline in pipelines:
-                if pipeline['name'] == config.get('pipelineName', 'Expireds and FSBO'):
+                if pipeline['name'] == config.get('pipelineName', 'Main Pipeline'):
                     my_pipeline = pipeline
             if my_pipeline != None:
                 my_stage = None
                 for stage in my_pipeline['stages']:
-                    if stage['name'] == config.get('firstStageName','New'):
+                    if stage['name'] == config.get('firstStageName','New Lead'):
                         my_stage = stage
                 if my_stage != None:
                     opportunity_data = {
