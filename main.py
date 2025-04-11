@@ -177,7 +177,7 @@ def vici_to_ghl(request: Request):
             "postalCode": zip_code,
             "address1": f"{city}, {state} {zip_code}, {country}",
             "customField": set_custom_fields(custom_fields_values, custom_fields),
-            "tags": ["New Lead"],
+            "tags": set_tags(disposition, config.get('dispositionsMapping', {})),
         }
 
         # Look up existing contact via external API.
@@ -263,4 +263,19 @@ def set_custom_fields(data, custom_fields):
                     result[field['id']] = data[custom_field]
             else:
                 result[field['id']] = data[custom_field]
+    return result
+
+def set_tags(disposition, dispositions_mapping):
+    """
+    Sets tags for the contact based on provided data.
+    This helper function maps provided data to the expected tag format.
+    """
+    result = []
+    
+    if disposition:
+        for tag, values in dispositions_mapping.items():
+            if disposition in values:
+                result.append(tag)
+                break
+
     return result
