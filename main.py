@@ -28,7 +28,6 @@ def vici_to_ghl(request: Request):
         params = request.args
         first_name = params.get('firstName')
         last_name = params.get('lastName')
-        list_description = params.get('listDescription')
         dialed_number = params.get('dialedNumber')
         disposition = params.get('disposition')
         campaign_id = params.get('campaignID')
@@ -37,12 +36,54 @@ def vici_to_ghl(request: Request):
         email = params.get('email')
         list_id = params.get('listID')
         lead_id = params.get('leadID', '0')
-        subscriber_id = params.get('subscriberID')
         location_path = params.get('locationID')
         city = params.get('city')
         state = params.get('state')
         zip_code = params.get('zip')
         country = params.get('country')
+        lead_type = params.get('leadType', '')
+        agent_assigned = params.get('agentAssigned', '')
+        alt_number = params.get('altNumber', '')
+        home_value = params.get('homeValue', '')
+        create_date = params.get('createDate', '')
+        equity = params.get('equity', '')
+        crm_name = params.get('crmName', '')
+        contact_link = params.get('contactLink', '')
+        build_date = params.get('buildDate', '')
+        listing_agent = params.get('listingAgent', '')
+        baths = params.get('baths', '')
+        buyer_agent = params.get('buyerAgent', '')
+        beds = params.get('beds', '')
+        lot_size = params.get('lotSize', '')
+        sqft = params.get('sqft', '')
+        build=params.get('build', '')
+        home_value = params.get('homeValue', '')
+        sq_ft = params.get('sqFt', '')
+        county = params.get('county', '')
+        zestimate = params.get('zestimate', '')
+        last_submission = params.get('lastSubmission', '')
+        tag = params.get('tag', '')
+        lead_score = params.get('leadScore', '')
+        last_submission_date = params.get('lastSubmissionDate', '')
+        estimated_price = params.get('estimatedPrice', '')
+        last_number_dialed = params.get('lastNumberDialed', '')
+        days_on_market = params.get('daysOnMarket', '')
+        final_question = params.get('finalQuestion', '')
+        alt_number = params.get('altNumber', '')
+        listing_status = params.get('listingStatus', '')
+        team_member = params.get('teamMember', '')
+        bathrooms = params.get('bathrooms', '')
+        motivation = params.get('motivation', '')
+        secondary_number = params.get('secondaryNumber', '')
+        homeowner= params.get('homeowner', '')
+        home_to_sell_or_buy = params.get('homeToSellOrBuy', '')
+        areas_of_interest = params.get('areasOfInterest', '')
+        pending_repairs = params.get('pendingRepairs', '')
+        non_negotiables = params.get('nonNegotiables', '')
+        timeframe = params.get('timeframe', '')
+        bedrooms = params.get('bedrooms', '')
+        lender = params.get('lender', '')
+        recent_upgrades = params.get('recentUpgrades', '')
 
         # Initialize Firestore client.
         fs_client = firestore.Client()
@@ -79,6 +120,50 @@ def vici_to_ghl(request: Request):
             "list_id": list_id,
             "lead_id": lead_id,
             "campaign": campaign_id,
+            "lead_type": lead_type,
+            "agent_assigned": agent_assigned,
+            "alt_number": alt_number,
+            "home_value": home_value,
+            "create_date": create_date,
+            "equity": equity,
+            "crm_name": crm_name,
+            "contact_link": contact_link,
+            "build_date": build_date,
+            "listing_agent": listing_agent,
+            "baths": baths,
+            "buyer_agent": buyer_agent,
+            "beds": beds,
+            "lot_size": lot_size,
+            "sqft": sqft,
+            "build": build,
+            "home_value": home_value,
+            "sq_ft": sq_ft,
+            "county": county,
+            "zestimate": zestimate,
+            "last_submission": last_submission,
+            "tag": tag,
+            "lead_score": lead_score,
+            "last_submission_date": last_submission_date,
+            "estimated_price": estimated_price,
+            "last_number_dialed": last_number_dialed,
+            "days_on_market": days_on_market,
+            "final_question": final_question,
+            "alt_number": alt_number,
+            "listing_status": listing_status,
+            "team_member": team_member,
+            "bathrooms": bathrooms,
+            "motivation": motivation,
+            "secondary_number": secondary_number,
+            "homeowner": homeowner,
+            "home_to_sell_or_buy": home_to_sell_or_buy,
+            "areas_of_interest": areas_of_interest,
+            "pending_repairs": pending_repairs,
+            "non_negotiables": non_negotiables,
+            "timeframe": timeframe,
+            "bedrooms": bedrooms,
+            "lender": lender,
+            "recent_upgrades": recent_upgrades,
+            "notes": call_note,
         }
 
         # Prepare contact data with custom fields.
