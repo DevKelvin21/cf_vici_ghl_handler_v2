@@ -112,10 +112,12 @@ def vici_to_ghl(request: Request):
         # Build the query for contact lookup.
         query = f"phone=+1{dialed_number.strip()}"
 
+        disposition_translated = set_disposition_translated(disposition)
+
         # Retrieve custom field definitions (assuming this is a method on GHL).
         custom_fields = app_instance.get_custom_fields()
         custom_fields_values = {
-            "disposition": disposition,
+            "disposition": disposition_translated,
             "term_reason": term_reason,
             "list_id": list_id,
             "lead_id": lead_id,
@@ -183,7 +185,7 @@ def vici_to_ghl(request: Request):
         # Look up existing contact via external API.
         contact = app_instance.contact_lookup(query)
         note_data = (
-            f"Disposition: {disposition}\n"
+            f"Disposition: {disposition_translated}\n"
             f"List ID: {list_id}\n"
             f"Term Reason: {term_reason}\n"
             f"Call Note: {call_note}"
@@ -265,7 +267,7 @@ def set_custom_fields(data, custom_fields):
                 result[field['id']] = data[custom_field]
     return result
 
-def set_tags(disposition, dispositions_mapping):
+def set_tags(disposition, disposition_tag_mapping):
     """
     Sets tags for the contact based on provided data.
     This helper function maps provided data to the expected tag format.
@@ -274,7 +276,7 @@ def set_tags(disposition, dispositions_mapping):
     result = []
     
     if disposition:
-        for tag, values in dispositions_mapping.items():
+        for tag, values in disposition_tag_mapping.items():
             if disposition in values:
                 result.append(tag)
                 break
@@ -282,5 +284,45 @@ def set_tags(disposition, dispositions_mapping):
     # Add "New Lead" as a default tag if no tags were added
     if not result:
         result.append("New Lead")
+
+    return result
+
+def set_disposition_translated(disposition):
+    """
+    Translates the disposition for the contact based on provided data.
+    This helper function maps provided data to the expected disposition format.
+    """
+
+    dispositions_mapping = {
+        "DROP": "No Answer",
+        "ADC": "No Answer",
+        "PDROP": "Outbound Pre-Routing",
+        "A": "Answering Machine",
+        "AA": "Answering Machine Auto",
+        "AB": "Busy Auto",
+        "B": "Busy",
+        "CALLBK": "Call Back",
+        "CBL": "Call Back Later",
+        "DC": "Disconnected Number",
+        "DNC": "Do Not Call",
+        "Follow": "Follow Up",
+        "N": "No Answer",
+        "NAU": "No Answer",
+        "NA": "No Answer Autodial",
+        "NI": "Not Interested",
+        "NPRSN": "In Person Appointment",
+        "Nurtre": "Nurture",
+        "PHNAPT": "Phone Appointment",
+        "WN": "Wrong Number"
+    }
+
+    result = ""
+
+    if disposition:
+        # Iterate through the mapping to find a match
+        for key, value in dispositions_mapping.items():
+            if disposition.upper().startswith(key.upper()):  # Case-insensitive match
+                result = value
+                break
 
     return result
