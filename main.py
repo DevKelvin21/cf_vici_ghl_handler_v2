@@ -4,6 +4,7 @@ from google.cloud import firestore
 from flask import jsonify, Request
 from .apps import GHL  # Assuming GHL is imported from the apps module
 import logging
+import re
 
 # Configure logging for structured output (could be extended to use Stackdriver if needed)
 logging.basicConfig(level=logging.INFO)
@@ -167,6 +168,8 @@ def vici_to_ghl(request: Request):
             "recent_upgrades": recent_upgrades,
             "notes": call_note,
         }
+        # Clean custom_fields_values to remove template placeholders
+        custom_fields_values = clean_custom_fields_values(custom_fields_values)
 
         # Prepare contact data with custom fields.
         data = {
@@ -326,3 +329,17 @@ def set_disposition_translated(disposition):
                 break
 
     return result
+
+def clean_custom_fields_values(fields_dict):
+    """
+    Cleans a dictionary of custom field values by replacing any value of the form
+    '--A--field_name--B--' with an empty string.
+    """
+    cleaned = {}
+    pattern = re.compile(r'^--A--.*--B--$')
+    for k, v in fields_dict.items():
+        if isinstance(v, str) and pattern.match(v):
+            cleaned[k] = ""
+        else:
+            cleaned[k] = v
+    return cleaned
